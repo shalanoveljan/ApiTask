@@ -16,6 +16,28 @@ function GetProducts() {
 GetProducts();
 
 
+const categories=[];
+
+function GetCategories() {
+    fetch('https://fakestoreapi.com/products/categories')
+    .then(response => response.json())
+    .then(data =>{
+        console.log(data);
+        data.forEach(cat => {
+            categories.push(cat);
+            document.querySelector('#category').innerHTML += getData2(cat)
+        })
+    })
+    .catch(error => console.log(error)) 
+    
+}
+GetCategories();
+
+function getData2(categori) {
+    return `
+    <option value="${categori}">${categori}</option>
+    `
+}
 
 function getData(product) {
     return `
@@ -37,7 +59,7 @@ function getData(product) {
 
 
 const input = document.querySelector('#product-input')
-let searchfiltered;
+let searchfiltered=products;
 input.onkeyup = function() {
     let value = this.value
     searchfiltered = products.filter(prod => prod.title.toLowerCase().includes(value.toLowerCase()))
